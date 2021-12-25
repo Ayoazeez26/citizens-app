@@ -41,7 +41,7 @@ const handleLogin = () => {
   >
     <div class="home-card p-10 rounded-lg">
       <div class="home-card__title flex justify-between items-end">
-        <p class="text-3xl">Log In</p>
+        <p class="text-3xl raleway font-semibold">Log In</p>
         <img src="../../assets/images/form-logo.png" alt="Logo " />
       </div>
       <form class="login-form mt-10" @submit.prevent="handleLogin">
@@ -54,7 +54,7 @@ const handleLogin = () => {
           <input
             id="userEmail"
             v-model="adminId"
-            class="email p-3 border mt-2 focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary"
+            class="email p-3 border mt-2 focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary w-full"
             type="email"
             name="username"
             placeholder="example@example.com"
@@ -69,7 +69,7 @@ const handleLogin = () => {
           <input
             id="userPassword"
             v-model="password"
-            class="email p-3 border mt-2 focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary"
+            class="email p-3 border mt-2 focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary w-full"
             :type="isPasswordVisible ? 'text' : 'password'"
             name="username"
             placeholder="z$!a.*gt#@7&g%"
@@ -142,9 +142,15 @@ const handleLogin = () => {
   background-repeat: no-repeat;
   background-position: center;
   &-card {
+    width: 423px;
+    max-width: 95%;
     background-color: white;
     box-shadow: 0px 10px 18px rgba(0, 0, 0, 0.1),
       0px 0px 1px rgba(0, 0, 0, 0.31);
+
+    &__title p {
+      font-weight: 600;
+    }
 
     .button:disabled {
       background-color: $purple-2;

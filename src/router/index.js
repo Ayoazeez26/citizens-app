@@ -1,11 +1,21 @@
 import { createRouter, createWebHistory } from "vue-router";
-import Home from "../views/Home.vue";
+import HomeLayout from "@/layout/Dashboard.vue";
 
 const routes = [
   {
     path: "/",
-    name: "Home",
-    component: Home,
+    component: HomeLayout,
+    children: [
+      {
+        name: "Home",
+        path: "",
+        component: () =>
+          import(
+            /* webpackChunkName: Dashboard */ "@/views/dashboard/home.vue"
+          ),
+        meta: { requiresAuth: true },
+      },
+    ],
   },
   {
     path: "/about",
