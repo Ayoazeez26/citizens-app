@@ -50,14 +50,15 @@ const toggleDialog = () => {
         </router-link>
         <router-link
           to="/dashboard/response"
-          class="item flex items-center space-x-2 px-4 cursor-pointer py-3"
+          class="item flex items-center space-x-2 px-4 cursor-pointer py-3 mb-7"
         >
           <svg-icon :data="responseicon" />
           <p class="item__text text-white">Emergency Response</p>
         </router-link>
+        <div class="line w-full h-px bg-grey-1"></div>
         <router-link
           to="/dashboard/settings"
-          class="item flex items-center space-x-2 px-4 cursor-pointer py-3"
+          class="item flex items-center space-x-2 px-4 cursor-pointer py-3 mt-10"
         >
           <svg-icon :data="settingsicon" />
           <p class="item__text text-white">Settings</p>
@@ -142,9 +143,9 @@ const toggleDialog = () => {
     padding-bottom: 40px;
     border-bottom: 1px solid $grey-1;
   }
-  &-links div:nth-child(6) {
-    padding-top: 20px;
-  }
+  // &-links div:nth-child(6) {
+  //   padding-top: 20px;
+  // }
   .item {
     border-radius: 10px;
     fill: $yellow-1;
