@@ -12,8 +12,8 @@ import EyeOutlineIcon from "vue-material-design-icons/EyeOutline.vue";
 import EyeOffOutlineIcon from "vue-material-design-icons/EyeOffOutline.vue";
 import { ref } from "vue";
 
-const adminId = ref('');
-const password = ref('')
+const adminId = ref("");
+const password = ref("");
 const rememberAdmin = ref(null);
 const togglePasswordVisibility = (e) => {
   isPasswordVisible.value = !isPasswordVisible.value;

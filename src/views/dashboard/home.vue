@@ -1,4 +1,5 @@
 <script>
+// import "../../../sprite/svg-icons.svg";
 export default {};
 </script>
 <script setup>
@@ -38,28 +39,28 @@ const shadowButtons = ref([
     amount: "3,123,456",
     desc: "Total Clicks",
     icon: "dash-record",
-    to: "/dashboard/reports",
+    to: "/reports",
   },
   {
     name: "Get Info",
     amount: "3,123,456",
     desc: "Total Clicks",
     icon: "dash-info",
-    to: "/dashboard/info",
+    to: "/info",
   },
   {
     name: "Contact Us",
     amount: "3,123,456",
     desc: "Total Clicks",
     icon: "dash-contact",
-    to: "/dashboard/contact",
+    to: "/contact",
   },
   {
     name: "Emergency Response",
     amount: "3,123,456",
     desc: "Total Clicks",
     icon: "dash-response",
-    to: "/dashboard/response",
+    to: "/response",
   },
 ]);
 </script>
@@ -74,7 +75,7 @@ const shadowButtons = ref([
           class="card rounded-lg flex flex-col items-center justify-center"
         >
           <span class="text-sm">{{ item.name }}</span>
-          <span class="text-gold-1 text-2xl font-semibold mt-6">
+          <span class="text-gold-1 text-2xl font-semibold mt-8">
             {{ item.amount }}
           </span>
           <span class="text-xs text-primary text-opacity-40">
@@ -85,18 +86,18 @@ const shadowButtons = ref([
     </div>
     <div class="shadow-section flex flex-col justify-start items-start">
       <h2 class="font-medium raleway text-2xl">Shadow Buttons</h2>
-      <div class="mt-6 flex flex-wrap">
+      <div class="card-container mt-6 flex flex-wrap">
         <div v-for="(item, index) in shadowButtons" :key="index">
           <router-link
             :to="item.to"
-            class="card rounded-lg flex flex-col items-center justify-center"
+            class="card rounded-lg flex flex-col items-center justify-center cursor-pointer"
           >
             <img
               :src="require(`../../assets/icons/${item.icon}.svg`)"
               :alt="`${item.name}-image`"
             />
             <span class="text-sm mt-2">{{ item.name }}</span>
-            <span class="text-gold-1 text-2xl font-semibold mt-6">
+            <span class="text-gold-1 text-2xl font-semibold mt-8">
               {{ item.amount }}
             </span>
             <span class="text-xs text-primary text-opacity-40">
@@ -108,23 +109,4 @@ const shadowButtons = ref([
     </div>
   </div>
 </template>
-<style lang="scss">
-.home-section {
-  margin: 56px 64px 72px 72px;
-  .card {
-    width: 184px;
-    padding-top: 30px;
-    padding-bottom: 30px;
-    background-color: white;
-    box-shadow: 0px 2px 16px rgba(0, 0, 0, 0.1);
-    margin-right: 28px;
-    margin-bottom: 28px;
-    img {
-      margin-top: 10px;
-    }
-  }
-  .shadow-section {
-    margin-top: 20px;
-  }
-}
-</style>
+<style lang="scss" scoped></style>

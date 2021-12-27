@@ -5,6 +5,11 @@ import store from "./store";
 import "./index.css";
 import "./assets/tailwind.css";
 import "./assets/fonts/fonts.scss";
-// import "vue-material-design-icons/styles.css";
+import { VueSvgIconPlugin } from "@yzfe/vue3-svgicon";
+import "@yzfe/svgicon/lib/svgicon.css";
 
-createApp(App).use(store).use(router).mount("#app");
+createApp(App)
+  .use(VueSvgIconPlugin, { tagName: "svg-icon" })
+  .use(store)
+  .use(router)
+  .mount("#app");

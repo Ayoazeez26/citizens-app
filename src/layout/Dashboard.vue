@@ -3,60 +3,71 @@ export default {};
 </script>
 <script setup>
 import { ref } from "vue";
+import dashicon from "../assets/dashicons/dashboard.svg";
+import reporticon from "../assets/dashicons/record.svg";
+import infoicon from "../assets/dashicons/info.svg";
+import contacticon from "../assets/dashicons/contact.svg";
+import responseicon from "../assets/dashicons/info.svg";
+import settingsicon from "../assets/dashicons/settings.svg";
+import logouticon from "../assets/dashicons/logout.svg";
+const showDialog = ref(false);
 
-const links = ref([
-  {
-    name: "Dashboard",
-    to: "/",
-    icon: "dashboard",
-  },
-  {
-    name: "Reports",
-    to: "/dashboard/reports",
-    icon: "record",
-  },
-  {
-    name: "Get Info",
-    to: "/dashboard/info",
-    icon: "info",
-  },
-  {
-    name: "Contact Us",
-    to: "/dashboard/contact",
-    icon: "contact",
-  },
-  {
-    name: "Emergency Response",
-    to: "/dashboard/response",
-    icon: "response",
-  },
-  {
-    name: "Settings",
-    to: "/dashboard/settings",
-    icon: "settings",
-  },
-]);
+const toggleDialog = () => {
+  showDialog.value = !showDialog.value;
+};
 </script>
 <template>
   <div class="min-w-screen min-h-screen flex">
-    <div class="sidebar pt-16">
+    <div class="sidebar pt-24">
       <div class="sidebar-links px-4">
-        <div
-          v-for="(item, index) in links"
-          :key="index"
-          class="sidebar-links__link my-8"
+        <router-link
+          to="/dashboard/home"
+          class="item flex items-center space-x-2 px-4 cursor-pointer py-3"
         >
-          <router-link
-            :to="item.to"
-            class="item flex items-center space-x-2 px-4 cursor-pointer"
-          >
-            <img
-              :src="require(`../assets/icons/${item.icon}.svg`)"
-              :alt="`${item.name}-image`"
-              class="item__icon"
-            />
-            <p class="item__text text-white">{{ item.name }}</p>
-          </router-link>
+          <svg-icon :data="dashicon" />
+          <p class="item__text text-white">Dashboard</p>
+        </router-link>
+        <router-link
+          to="/dashboard/reports"
+          class="item flex items-center space-x-2 px-4 cursor-pointer py-3"
+        >
+          <svg-icon :data="reporticon" />
+          <p class="item__text text-white">Reports</p>
+        </router-link>
+        <router-link
+          to="/dashboard/info"
+          class="item flex items-center space-x-2 px-4 cursor-pointer py-3"
+        >
+          <svg-icon :data="infoicon" />
+          <p class="item__text text-white">Get Info</p>
+        </router-link>
+        <router-link
+          to="/dashboard/contact"
+          class="item flex items-center space-x-2 px-4 cursor-pointer py-3"
+        >
+          <svg-icon :data="contacticon" />
+          <p class="item__text text-white">Contact Us</p>
+        </router-link>
+        <router-link
+          to="/dashboard/response"
+          class="item flex items-center space-x-2 px-4 cursor-pointer py-3"
+        >
+          <svg-icon :data="responseicon" />
+          <p class="item__text text-white">Emergency Response</p>
+        </router-link>
+        <router-link
+          to="/dashboard/settings"
+          class="item flex items-center space-x-2 px-4 cursor-pointer py-3"
+        >
+          <svg-icon :data="settingsicon" />
+          <p class="item__text text-white">Settings</p>
+        </router-link>
+        <div
+          @click="toggleDialog"
+          class="item flex items-center space-x-2 px-4 cursor-pointer py-3"
+        >
+          <svg-icon :data="logouticon" />
+          <p class="item__text text-white">Logout</p>
         </div>
       </div>
     </div>
@@ -69,6 +80,7 @@ const links = ref([
           src="../assets/images/dashboard-logo.png"
           alt="logo"
         />
+
         <div class="flex items-center mr-16">
           <img
             class="mr-6"
@@ -91,6 +103,33 @@ const links = ref([
       </div>
     </div>
   </div>
+  <div class="popup" v-if="showDialog">
+    <div class="popup-container">
+      <div
+        class="popup-container__content flex flex-col justify-start text-left items-left"
+      >
+        <p class="text-lg mb-6 text-primary font-bold raleway">Logout</p>
+        <p class="text-grey-1 font-medium text-base text-left mb-10">
+          Confirm if you really want to logout. Select cancel to go back.
+        </p>
+        <div class="buttons flex items-center self-end justify-center">
+          <button
+            @click="toggleDialog"
+            type="button"
+            class="text-gold-1 text-base font-semibold"
+          >
+            CANCEL
+          </button>
+          <router-link
+            to="/auth/login"
+            class="logout-btn text-primary text-opacity-40 text-base font-semibold"
+          >
+            I WANT TO LOGOUT
+          </router-link>
+        </div>
+      </div>
+    </div>
+  </div>
 </template>
 <style lang="scss">
 .sidebar {
@@ -108,11 +147,16 @@ const links = ref([
   }
   .item {
     border-radius: 10px;
+    fill: $yellow-1;
+    & .svg-fill {
+      fill: $yellow-1;
+    }
     &.router-link-exact-active {
       background-color: $yellow-1;
       color: $primary;
-      padding-top: 0.75rem;
-      padding-bottom: 0.75rem;
+      & .svg-fill {
+        fill: $primary;
+      }
       .item__text {
         color: $primary;
       }
@@ -132,6 +176,56 @@ const links = ref([
   }
   &-section {
     padding-left: 272px;
+    .home-section {
+      margin: 56px 64px 72px 72px;
+      .card {
+        width: 184px;
+        min-height: 180px;
+        padding: 30px;
+        background-color: white;
+        box-shadow: 0px 2px 16px rgba(0, 0, 0, 0.1);
+        margin-right: 28px;
+        margin-bottom: 28px;
+        img {
+          margin-top: 10px;
+        }
+      }
+      .shadow-section {
+        margin-top: 20px;
+      }
+      .card-container div:nth-child(4) a {
+        padding-left: 20px;
+        padding-right: 20px;
+      }
+    }
+  }
+}
+.popup {
+  width: 100vw;
+  height: 100vh;
+  position: absolute;
+  top: 0;
+  left: 0;
+  background-color: rgba(black, 0.3);
+  z-index: 50;
+
+  &-container {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    &__content {
+      width: 470px;
+      background-color: white;
+      border-radius: 8px;
+      padding: 38px 32px;
+
+      .logout-btn {
+        margin-left: 57px;
+      }
+    }
   }
 }
 </style>

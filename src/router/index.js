@@ -3,28 +3,46 @@ import HomeLayout from "@/layout/Dashboard.vue";
 
 const routes = [
   {
-    path: "/",
+    path: "/dashboard",
     component: HomeLayout,
     children: [
       {
         name: "Home",
-        path: "",
+        path: "home",
         component: () =>
           import(
             /* webpackChunkName: Dashboard */ "@/views/dashboard/home.vue"
           ),
-        meta: { requiresAuth: true },
+      },
+      {
+        // meta: { requiresAuth: true },
+        name: "Reports",
+        path: "reports",
+        component: () =>
+          import(/* webpackChunkName: Dashboard */ "@/views/reports.vue"),
+      },
+      {
+        // meta: { requiresAuth: true },
+        name: "Info",
+        path: "info",
+        component: () =>
+          import(/* webpackChunkName: Dashboard */ "@/views/info.vue"),
+      },
+      {
+        // meta: { requiresAuth: true },
+        name: "Contact",
+        path: "contact",
+        component: () =>
+          import(/* webpackChunkName: Dashboard */ "@/views/contact.vue"),
+      },
+      {
+        // meta: { requiresAuth: true },
+        name: "Response",
+        path: "response",
+        component: () =>
+          import(/* webpackChunkName: Dashboard */ "@/views/response.vue"),
       },
     ],
-  },
-  {
-    path: "/about",
-    name: "About",
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () =>
-      import(/* webpackChunkName: "about" */ "../views/About.vue"),
   },
   {
     path: "/auth",
