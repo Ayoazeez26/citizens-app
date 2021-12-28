@@ -7,7 +7,7 @@ import dashicon from "../assets/dashicons/dashboard.svg";
 import reporticon from "../assets/dashicons/record.svg";
 import infoicon from "../assets/dashicons/info.svg";
 import contacticon from "../assets/dashicons/contact.svg";
-import responseicon from "../assets/dashicons/info.svg";
+import responseicon from "../assets/dashicons/response.svg";
 import settingsicon from "../assets/dashicons/settings.svg";
 import logouticon from "../assets/dashicons/logout.svg";
 const showDialog = ref(false);
@@ -39,14 +39,14 @@ const toggleDialog = () => {
           class="item flex items-center space-x-2 px-4 cursor-pointer py-3"
         >
           <svg-icon :data="infoicon" />
-          <p class="item__text text-white">Get Info</p>
+          <p class="item__text text-white">Information</p>
         </router-link>
         <router-link
           to="/dashboard/contact"
           class="item flex items-center space-x-2 px-4 cursor-pointer py-3"
         >
           <svg-icon :data="contacticon" />
-          <p class="item__text text-white">Contact Us</p>
+          <p class="item__text text-white">Contact</p>
         </router-link>
         <router-link
           to="/dashboard/response"
