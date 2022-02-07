@@ -41,8 +41,8 @@ const handleLogin = () => {
   >
     <div class="home-card p-10 rounded-lg">
       <div class="home-card__title flex justify-between items-end">
-        <p class="text-3xl raleway font-semibold">Log In</p>
-        <img src="../../assets/images/form-logo.png" alt="Logo " />
+        <p class="text-3xl text-primary raleway font-semibold">Log In</p>
+        <img src="../../assets/images/form_logo.png" alt="Logo " />
       </div>
       <form class="login-form mt-10" @submit.prevent="handleLogin">
         <div class="userId flex flex-col items-start mb-4">
@@ -115,7 +115,7 @@ const handleLogin = () => {
         <button
           type="submit"
           :disabled="containsItem"
-          class="w-full py-4 bg-primary text-yellow-1 font-medium rounded-lg disabled:bg-opacity-60"
+          class="w-full py-4 bg-primary text-white font-medium rounded-lg disabled:bg-opacity-60"
           @click="router.push('/dashboard/home')"
         >
           Login
@@ -138,7 +138,7 @@ const handleLogin = () => {
 
 <style lang="scss">
 .home {
-  background-image: url("../../assets/images/home-bg.png");
+  background-image: url("../../assets/images/home_bg.png");
   background-repeat: no-repeat;
   background-position: center;
   &-card {

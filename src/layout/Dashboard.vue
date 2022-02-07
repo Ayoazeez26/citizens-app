@@ -5,10 +5,10 @@ export default {};
 import { ref } from "vue";
 import dashicon from "../assets/dashicons/dashboard.svg";
 import reporticon from "../assets/dashicons/record.svg";
-import infoicon from "../assets/dashicons/info.svg";
-import contacticon from "../assets/dashicons/contact.svg";
-import responseicon from "../assets/dashicons/response.svg";
-import settingsicon from "../assets/dashicons/settings.svg";
+// import infoicon from "../assets/dashicons/info.svg";
+// import contacticon from "../assets/dashicons/contact.svg";
+// import responseicon from "../assets/dashicons/response.svg";
+// import settingsicon from "../assets/dashicons/settings.svg";
 import logouticon from "../assets/dashicons/logout.svg";
 const showDialog = ref(false);
 
@@ -24,7 +24,7 @@ const toggleDialog = () => {
           to="/dashboard/home"
           class="item flex items-center space-x-2 px-4 cursor-pointer py-3"
         >
-          <svg-icon :data="dashicon" />
+          <svg-icon :data="dashicon" :fill="none" />
           <p class="item__text text-white">Dashboard</p>
         </router-link>
         <router-link
@@ -34,7 +34,7 @@ const toggleDialog = () => {
           <svg-icon :data="reporticon" />
           <p class="item__text text-white">Reports</p>
         </router-link>
-        <router-link
+        <!-- <router-link
           to="/dashboard/info"
           class="item flex items-center space-x-2 px-4 cursor-pointer py-3"
         >
@@ -54,15 +54,15 @@ const toggleDialog = () => {
         >
           <svg-icon :data="responseicon" />
           <p class="item__text text-white">Emergency Response</p>
-        </router-link>
-        <div class="line w-full h-px bg-grey-1"></div>
-        <router-link
+        </router-link> -->
+        <div class="line w-full h-px bg-grey-1 my-8"></div>
+        <!-- <router-link
           to="/dashboard/settings"
           class="item flex items-center space-x-2 px-4 cursor-pointer py-3 mt-10"
         >
           <svg-icon :data="settingsicon" />
           <p class="item__text text-white">Settings</p>
-        </router-link>
+        </router-link> -->
         <div
           @click="toggleDialog"
           class="item flex items-center space-x-2 px-4 cursor-pointer py-3"
@@ -78,7 +78,7 @@ const toggleDialog = () => {
       >
         <img
           class="w-32 h-auto ml-4"
-          src="../assets/images/dashboard-logo.png"
+          src="../assets/images/dashboard_logo.png"
           alt="logo"
         />
 

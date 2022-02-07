@@ -4,32 +4,20 @@ export default {};
 </script>
 <script setup>
 import { ref } from "vue";
+import smsicon from "../../assets/dashicons/sms.svg";
+// eslint-disable-next-line no-unused-vars
+import phoneicon from "../../assets/dashicons/phone.svg";
 
-const userDemo = ref([
+const waste = ref([
   {
-    name: "Chikun",
-    amount: "123,456",
-    desc: "Registered",
+    name: "Messages",
+    icon: "smsicon",
+    count: "658",
   },
   {
-    name: "Igabi",
-    amount: "85,546",
-    desc: "Registered",
-  },
-  {
-    name: "Kaduna North",
-    amount: "754,654",
-    desc: "Registered",
-  },
-  {
-    name: "Kaduna South",
-    amount: "999,989",
-    desc: "Registered",
-  },
-  {
-    name: "Non Resident",
-    amount: "3,456",
-    desc: "Registered",
+    name: "Calls",
+    icon: "phoneicon",
+    count: "148",
   },
 ]);
 
@@ -67,19 +55,22 @@ const shadowButtons = ref([
 <template lang="">
   <div class="home-section">
     <div class="demo flex flex-col justify-start items-start">
-      <h2 class="font-medium raleway text-2xl">User Demographics</h2>
+      <h2 class="font-medium raleway text-2xl">
+        Total Report Counts - Waste Management
+      </h2>
       <div class="mt-6 flex flex-wrap">
         <div
-          v-for="(item, index) in userDemo"
+          v-for="(item, index) in waste"
           :key="index"
           class="card rounded-lg flex flex-col items-center justify-center"
         >
+          <svg-icon :data="smsicon" />
           <span class="text-sm">{{ item.name }}</span>
           <span class="text-gold-1 text-2xl font-semibold mt-8">
-            {{ item.amount }}
+            {{ item.count }}
           </span>
           <span class="text-xs text-primary text-opacity-40">
-            {{ item.desc }}
+            nothing to see here
           </span>
         </div>
       </div>
