@@ -4,51 +4,24 @@ export default {};
 </script>
 <script setup>
 import { ref } from "vue";
-import smsicon from "../../assets/dashicons/sms.svg";
-// eslint-disable-next-line no-unused-vars
-import phoneicon from "../../assets/dashicons/phone.svg";
-
-const waste = ref([
-  {
-    name: "Messages",
-    icon: "smsicon",
-    count: "658",
-  },
-  {
-    name: "Calls",
-    icon: "phoneicon",
-    count: "148",
-  },
-]);
-
 const shadowButtons = ref([
   {
-    name: "Reports",
-    amount: "3,123,456",
-    desc: "Total Clicks",
-    icon: "dash-record",
+    name: "Pending",
+    class: "red",
+    amount: "164",
     to: "/reports",
   },
   {
-    name: "Get Info",
-    amount: "3,123,456",
-    desc: "Total Clicks",
-    icon: "dash-info",
+    name: "In progress",
+    amount: "329",
+    class: "yellow",
     to: "/info",
   },
   {
-    name: "Contact Us",
-    amount: "3,123,456",
-    desc: "Total Clicks",
-    icon: "dash-contact",
+    name: "Completed",
+    class: "green",
+    amount: "165",
     to: "/contact",
-  },
-  {
-    name: "Emergency Response",
-    amount: "3,123,456",
-    desc: "Total Clicks",
-    icon: "dash-response",
-    to: "/response",
   },
 ]);
 </script>
@@ -59,45 +32,83 @@ const shadowButtons = ref([
         Total Report Counts - Waste Management
       </h2>
       <div class="mt-6 flex flex-wrap">
-        <div
-          v-for="(item, index) in waste"
-          :key="index"
-          class="card rounded-lg flex flex-col items-center justify-center"
-        >
-          <svg-icon :data="smsicon" />
-          <span class="text-sm">{{ item.name }}</span>
-          <span class="text-gold-1 text-2xl font-semibold mt-8">
-            {{ item.count }}
-          </span>
-          <span class="text-xs text-primary text-opacity-40">
-            nothing to see here
-          </span>
+        <div class="waste-card rounded-lg flex items-center justify-start py-4">
+          <img src="../../assets/images/mic.png" alt="mic" />
+          <div class="line h-full w-px bg-grey-2 mx-12"></div>
+          <span class="text-primary text-5xl"> 658 </span>
+          <span
+            class="text-xs text-primary text-opacity-40 self-start mt-5 ml-2"
+            >Reported</span
+          >
         </div>
       </div>
     </div>
     <div class="shadow-section flex flex-col justify-start items-start">
-      <h2 class="font-medium raleway text-2xl">Shadow Buttons</h2>
+      <h2 class="font-medium raleway text-2xl">Resolution Status</h2>
       <div class="card-container mt-6 flex flex-wrap">
         <div v-for="(item, index) in shadowButtons" :key="index">
           <router-link
             :to="item.to"
-            class="card rounded-lg flex flex-col items-center justify-center cursor-pointer"
+            class="status-card rounded-lg flex items-center justify-start cursor-pointer"
           >
-            <img
-              :src="require(`../../assets/icons/${item.icon}.svg`)"
-              :alt="`${item.name}-image`"
-            />
-            <span class="text-sm mt-2">{{ item.name }}</span>
-            <span class="text-gold-1 text-2xl font-semibold mt-8">
+            <div
+              class="left mr-8 rounded-tl-lg rounded-bl-lg"
+              :class="`left--${item.class}`"
+            ></div>
+            <span class="text-primary font-bold text-2xl">
               {{ item.amount }}
             </span>
-            <span class="text-xs text-primary text-opacity-40">
-              {{ item.desc }}
-            </span>
+            <span
+              class="text-xs text-primary text-opacity-40 self-start mt-5 ml-2"
+              :class="item.class"
+              >{{ item.name }}</span
+            >
           </router-link>
         </div>
       </div>
     </div>
   </div>
 </template>
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+.waste-card {
+  width: 502px;
+  height: 130px;
+  padding-left: 48px;
+  background-color: white;
+  box-shadow: 0px 2px 16px rgba(0, 0, 0, 0.1);
+}
+.status-card {
+  width: 328px;
+  height: 80px;
+  background-color: white;
+  box-shadow: 0px 2px 16px rgba(0, 0, 0, 0.1);
+  margin-right: 28px;
+  margin-bottom: 28px;
+  &:hover {
+    box-shadow: 0px 5px 26px rgba(0, 0, 0, 0.1);
+  }
+  .red {
+    color: $red;
+  }
+  .yellow {
+    color: $yellow-1;
+  }
+  .green {
+    color: $green-1;
+  }
+  .left {
+    width: 64px;
+    height: 100%;
+
+    &--red {
+      background-color: $red;
+    }
+    &--yellow {
+      background-color: $yellow-1;
+    }
+    &--green {
+      background-color: $green-1;
+    }
+  }
+}
+</style>
