@@ -21,14 +21,14 @@ const toggleDialog = () => {
     <div class="sidebar pt-24">
       <div class="sidebar-links px-4">
         <router-link
-          to="/dashboard/home"
+          to="/"
           class="item flex items-center space-x-2 px-4 cursor-pointer py-3"
         >
           <svg-icon :data="dashicon" :fill="none" />
           <p class="item__text text-white">Dashboard</p>
         </router-link>
         <router-link
-          to="/dashboard/reports"
+          to="/reports"
           class="item flex items-center space-x-2 px-4 cursor-pointer py-3"
         >
           <svg-icon :data="reporticon" />
@@ -117,13 +117,13 @@ const toggleDialog = () => {
           <button
             @click="toggleDialog"
             type="button"
-            class="text-gold-1 text-base font-semibold"
+            class="text-primary text-sm font-semibold"
           >
             CANCEL
           </button>
           <router-link
             to="/auth/login"
-            class="logout-btn text-primary text-opacity-40 text-base font-semibold"
+            class="logout-btn text-primary text-opacity-40 text-sm font-semibold"
           >
             I WANT TO LOGOUT
           </router-link>

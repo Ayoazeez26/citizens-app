@@ -3,12 +3,12 @@ import HomeLayout from "@/layout/Dashboard.vue";
 
 const routes = [
   {
-    path: "/dashboard",
+    path: "/",
     component: HomeLayout,
     children: [
       {
         name: "Home",
-        path: "home",
+        path: "",
         component: () =>
           import(/* webpackChunkName: auth */ "@/views/dashboard/home.vue"),
       },
@@ -17,36 +17,36 @@ const routes = [
         name: "Reports",
         path: "reports",
         component: () =>
-          import(/* webpackChunkName: auth */ "@/views/reports.vue"),
+          import(/* webpackChunkName: auth */ "@/views/reports/index.vue"),
       },
-      {
-        // meta: { requiresAuth: true },
-        name: "Info",
-        path: "info",
-        component: () =>
-          import(/* webpackChunkName: auth */ "@/views/info.vue"),
-      },
-      {
-        // meta: { requiresAuth: true },
-        name: "Contact",
-        path: "contact",
-        component: () =>
-          import(/* webpackChunkName: auth */ "@/views/contact.vue"),
-      },
-      {
-        // meta: { requiresAuth: true },
-        name: "Response",
-        path: "response",
-        component: () =>
-          import(/* webpackChunkName: auth */ "@/views/response.vue"),
-      },
-      {
-        // meta: { requiresAuth: true },
-        name: "Settings",
-        path: "settings",
-        component: () =>
-          import(/* webpackChunkName: auth */ "@/views/settings.vue"),
-      },
+      // {
+      //   // meta: { requiresAuth: true },
+      //   name: "Info",
+      //   path: "info",
+      //   component: () =>
+      //     import(/* webpackChunkName: auth */ "@/views/info.vue"),
+      // },
+      // {
+      //   // meta: { requiresAuth: true },
+      //   name: "Contact",
+      //   path: "contact",
+      //   component: () =>
+      //     import(/* webpackChunkName: auth */ "@/views/contact.vue"),
+      // },
+      // {
+      //   // meta: { requiresAuth: true },
+      //   name: "Response",
+      //   path: "response",
+      //   component: () =>
+      //     import(/* webpackChunkName: auth */ "@/views/response.vue"),
+      // },
+      // {
+      //   // meta: { requiresAuth: true },
+      //   name: "Settings",
+      //   path: "settings",
+      //   component: () =>
+      //     import(/* webpackChunkName: auth */ "@/views/settings.vue"),
+      // },
     ],
   },
   {
