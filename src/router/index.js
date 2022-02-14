@@ -50,11 +50,11 @@ const routes = [
     ],
   },
   {
-    path: "/auth",
+    path: "/",
     name: "Auth",
     component: () => import(/* webpackChunkName: "auth" */ "@/layout/Auth.vue"),
     redirect: () => {
-      return "/auth/login";
+      return "/login";
     },
     children: [
       {

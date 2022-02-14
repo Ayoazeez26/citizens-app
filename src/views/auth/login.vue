@@ -116,7 +116,7 @@ const handleLogin = () => {
           type="submit"
           :disabled="containsItem"
           class="w-full py-4 bg-primary text-white font-medium rounded-lg disabled:bg-opacity-60"
-          @click="router.push('/dashboard/home')"
+          @click="router.push('/')"
         >
           Login
         </button>

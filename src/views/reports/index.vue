@@ -4,7 +4,18 @@ export default {};
 <script setup>
 import arrowDown from "../../assets/dashicons/arrow-down.svg";
 import search from "../../assets/dashicons/search.svg";
-import { ref } from "vue";
+import { ref, computed } from "vue";
+
+const searchInput = ref("");
+const filterBody = computed(() => {
+  let tempReports = reports.value;
+  if (searchInput.value !== '' && searchInput.value) {
+    tempReports = tempReports.filter((item) => {
+      return item.title.toUpperCase().includes(searchInput.value.toUpperCase())
+    })
+  }
+  return tempReports
+})
 const statuses = ref(["Pending", "In Progress", "Resolved"]);
 const reports = ref([
   {
@@ -104,6 +115,7 @@ const setValue = (index) => {
   displayData.value = reports.value[index];
 };
 const btnClicked = ref(false);
+const filterClicked = ref(false);
 </script>
 <template lang="">
   <div class="home-section w-full">
@@ -113,21 +125,28 @@ const btnClicked = ref(false);
         <div class="flex items-center relative">
           <input
             type="text"
-            class="border border-primary rounded-xl pl-6 text-xs bg-transparent h-10 mr-2 w-80"
+            v-model="searchInput"
+            @input="filterBody"
+            class="border border-primary rounded-xl pl-6 text-xs bg-transparent h-10 mr-2 w-60 2xl:w-80"
             placeholder="Search by Name or Resolution Status"
           />
           <svg-icon class="absolute top-3 mt-px left-2" :data="search" />
           <button
             class="bg-yellow-1 cursor-pointer h-10 flex items-center justify-center rounded-xl px-4 py-3 ml-2 text-xs text-white"
+            :class="filterClicked ? 'bg-primary' : 'bg-yellow-1'"
+            @click="filterClicked = !filterClicked"
           >
             <span>Filter by Tags</span>
-            <svg-icon class="ml-2" :data="arrowDown" />
+            <svg-icon
+              class="ml-2"
+              :data="arrowDown"
+              :class="filterClicked ? 'transform rotate-180' : ''" />
           </button>
         </div>
       </div>
       <div class="report w-full">
         <div
-          v-for="(report, index) in reports"
+          v-for="(report, index) in filterBody"
           :key="index"
           :class="index === selectedIndex ? 'active' : ''"
           @click="setValue(index)"

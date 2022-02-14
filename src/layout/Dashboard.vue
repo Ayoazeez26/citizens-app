@@ -198,6 +198,9 @@ const toggleDialog = () => {
         padding-left: 20px;
         padding-right: 20px;
       }
+      @media screen and (max-width: 1294px) {
+        margin: 56px 24px 72px 24px;
+      }
     }
   }
 }
