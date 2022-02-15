@@ -9,19 +9,19 @@ const shadowButtons = ref([
     name: "Pending",
     class: "red",
     amount: "164",
-    to: "/reports",
+    to: "/reports#pending",
   },
   {
     name: "In progress",
     amount: "329",
     class: "yellow",
-    to: "/info",
+    to: "/reports#progress",
   },
   {
-    name: "Completed",
+    name: "Resolved",
     class: "green",
     amount: "165",
-    to: "/contact",
+    to: "/reports#resolved",
   },
 ]);
 </script>
@@ -32,15 +32,19 @@ const shadowButtons = ref([
         Total Report Counts - Waste Management
       </h2>
       <div class="mt-6 flex flex-wrap">
-        <div class="waste-card rounded-lg flex items-center justify-start py-4">
-          <img src="../../assets/images/mic.png" alt="mic" />
-          <div class="line h-full w-px bg-grey-2 mx-12"></div>
-          <span class="text-primary text-5xl"> 658 </span>
-          <span
-            class="text-xs text-primary text-opacity-40 self-start mt-5 ml-2"
-            >Reported</span
+        <router-link to="/reports">
+          <div
+            class="waste-card rounded-lg flex items-center justify-start py-4"
           >
-        </div>
+            <img src="../../assets/images/mic.png" alt="mic" />
+            <div class="line h-full w-px bg-grey-2 mx-12"></div>
+            <span class="text-primary text-5xl"> 658 </span>
+            <span
+              class="text-xs text-primary text-opacity-40 self-start mt-5 ml-2"
+              >Reported</span
+            >
+          </div>
+        </router-link>
       </div>
     </div>
     <div class="shadow-section flex flex-col justify-start items-start">

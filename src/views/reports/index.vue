@@ -4,14 +4,37 @@ export default {};
 <script setup>
 import arrowDown from "../../assets/dashicons/arrow-down.svg";
 import search from "../../assets/dashicons/search.svg";
-import { ref, computed } from "vue";
+import { watch, ref, computed } from "vue";
+import { useRoute, useRouter } from 'vue-router';
 
+const router = useRouter();
+const route = useRoute();
+
+watch(route, (value) => {
+  console.log(value);
+  checkHash();
+})
+const statusFilter = ref('');
+const checkHash = () => {
+  if (route.hash) {
+    let statusVal = route.hash.split('');
+    statusVal.shift();
+    let finalStatus = statusVal.join('');
+    statusFilter.value = finalStatus;
+  }
+}
+checkHash();
 const searchInput = ref("");
 const filterBody = computed(() => {
   let tempReports = reports.value;
   if (searchInput.value !== '' && searchInput.value) {
     tempReports = tempReports.filter((item) => {
       return item.title.toUpperCase().includes(searchInput.value.toUpperCase())
+    })
+  }
+  if (statusFilter.value) {
+    tempReports = tempReports.filter(item => {
+      return (item.status.toUpperCase().includes(statusFilter.value.toUpperCase()))
     })
   }
   return tempReports
@@ -116,6 +139,15 @@ const setValue = (index) => {
 };
 const btnClicked = ref(false);
 const filterClicked = ref(false);
+const showFiltered = (status) => {
+  if (status === "Pending") {
+    router.push('/reports#pending');
+  } else if (status === "In Progress") {
+    router.push('/reports#progress');
+  } else {
+    router.push('/reports#resolved');
+  }
+}
 </script>
 <template lang="">
   <div class="home-section w-full">
@@ -132,7 +164,7 @@ const filterClicked = ref(false);
           />
           <svg-icon class="absolute top-3 mt-px left-2" :data="search" />
           <button
-            class="bg-yellow-1 cursor-pointer h-10 flex items-center justify-center rounded-xl px-4 py-3 ml-2 text-xs text-white"
+            class="cursor-pointer h-10 flex items-center justify-center rounded-xl px-4 py-3 ml-2 text-xs text-white"
             :class="filterClicked ? 'bg-primary' : 'bg-yellow-1'"
             @click="filterClicked = !filterClicked"
           >
@@ -142,6 +174,16 @@ const filterClicked = ref(false);
               :data="arrowDown"
               :class="filterClicked ? 'transform rotate-180' : ''" />
           </button>
+          <div v-if="filterClicked" class="absolute right-0 top-10 flex flex-col items-center">
+            <p
+              v-for="(status, index) in statuses"
+              :key="index"
+              class="cursor-pointer status border-b py-4 text-primary bg-white flex justify-center items-center w-32 leading-none text-base font-medium"
+              @click="showFiltered(status)"
+            >
+              {{ status }}
+            </p>
+          </div>
         </div>
       </div>
       <div class="report w-full">
