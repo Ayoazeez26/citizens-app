@@ -135,7 +135,7 @@ const checkStatus = (status) => {
 };
 const setValue = (index) => {
   selectedIndex.value = index;
-  displayData.value = reports.value[index];
+  displayData.value = filterBody.value[index];
 };
 const btnClicked = ref(false);
 const filterClicked = ref(false);
@@ -160,7 +160,7 @@ const showFiltered = (status) => {
             v-model="searchInput"
             @input="filterBody"
             class="border border-primary rounded-xl pl-6 text-xs bg-transparent h-10 mr-2 w-60 2xl:w-80"
-            placeholder="Search by Name or Resolution Status"
+            placeholder="Search"
           />
           <svg-icon class="absolute top-3 mt-px left-2" :data="search" />
           <button
@@ -168,7 +168,7 @@ const showFiltered = (status) => {
             :class="filterClicked ? 'bg-primary' : 'bg-yellow-1'"
             @click="filterClicked = !filterClicked"
           >
-            <span>Filter by Tags</span>
+            <span>Filter by Status</span>
             <svg-icon
               class="ml-2"
               :data="arrowDown"
@@ -178,7 +178,7 @@ const showFiltered = (status) => {
             <p
               v-for="(status, index) in statuses"
               :key="index"
-              class="cursor-pointer status border-b py-4 text-primary bg-white flex justify-center items-center w-32 leading-none text-base font-medium"
+              class="cursor-pointer status border-b py-4 text-primary bg-white flex justify-start pl-4 items-center text-left w-36 leading-none text-base font-medium"
               @click="showFiltered(status)"
             >
               {{ status }}
@@ -268,7 +268,7 @@ const showFiltered = (status) => {
             :key="index"
             class="mt-2 cursor-pointer status text-white flex justify-center items-center px-3 max-w-max leading-none text-sm font-medium"
             :class="checkStatus(status)"
-            @click="reports[selectedIndex].status = status"
+            @click="filterBody[selectedIndex].status = status"
           >
             {{ status }}
           </p>
@@ -292,7 +292,6 @@ const showFiltered = (status) => {
   padding-right: 416px;
 
   .report-card {
-    height: 142px;
     width: 100%;
 
     &.active {
