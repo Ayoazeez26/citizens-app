@@ -6,14 +6,39 @@ import arrowDown from "../../assets/dashicons/arrow-down.svg";
 import search from "../../assets/dashicons/search.svg";
 import { watch, ref, computed } from "vue";
 import { useRoute, useRouter } from 'vue-router';
+import { getAllReports, updateReportStatus } from "@/services/ReportService";
+// import { useStore } from "vuex";
 
+// const store = useStore();
 const router = useRouter();
 const route = useRoute();
+const reportData = ref([]);
+const getReports = () => {
+  getAllReports().then((res) => {
+    const data = res.data;
+    console.log(data);
+    reportData.value = data.data.singleReport;
+    // filterData();
+  });
+};
+getReports();
+
+const updateStatus = (status) => {
+  displayData.value.status = status
+  // filterBody[selectedIndex].status = status
+  const id = displayData.value._id;
+  const data = displayData.value;
+  updateReportStatus(id, data).then((res) => {
+    console.log(data)
+    filterBody.value[selectedIndex].status = status
+  })
+}
 
 watch(route, (value) => {
   console.log(value);
   checkHash();
 })
+// const reportData = computed(() => store.state.report.allReports);
 const statusFilter = ref('');
 const checkHash = () => {
   if (route.hash) {
@@ -26,7 +51,7 @@ const checkHash = () => {
 checkHash();
 const searchInput = ref("");
 const filterBody = computed(() => {
-  let tempReports = reports.value;
+  let tempReports = reportData.value;
   if (searchInput.value !== '' && searchInput.value) {
     tempReports = tempReports.filter((item) => {
       return item.title.toUpperCase().includes(searchInput.value.toUpperCase())
@@ -39,95 +64,103 @@ const filterBody = computed(() => {
   }
   return tempReports
 })
-const statuses = ref(["Pending", "In Progress", "Resolved"]);
-const reports = ref([
+const description = ref([
   {
-    name: "Umar Salihu",
-    img: "https://source.unsplash.com/random/56x56",
-    status: "Pending",
-    time: "12:25pm",
-    title: "Indiscriminate Dumping of Waste",
-    shortDesc:
-      "Unlawful disposal of waste in undesignated spaces such as open...",
+    tag: "Indiscriminate dumping of waste",
+    shortDesc: "unlawful disposal of waste in undesignated spaces...",
+    longDesc: "unlawful disposal of waste in undesignated spaces such as open or vacant land, sources of water, and other areas."
   },
   {
-    name: "Umar Salihu",
-    img: "https://source.unsplash.com/random/56x56",
-    status: "In Progress",
-    time: "12:25pm",
-    title: "Littering",
-    shortDesc:
-      "Littering is the unlawful deposit of any type of waste material that...",
+    tag: "Littering",
+    shortDesc: "Littering is the unlawful deposit of any type of waste material...",
+    longDesc: "Littering is the unlawful deposit of any type of waste material that is less than 200 litres in volume. This includes;cigarette butts, drinks bottles, fast food packaging, food scraps, green waste such as palm fronds and grass clippings, fishing tackle, balloons, leaving items beside an overflowing bin, leaving items under your seat at a sports stadium, leaving a newspaper on public transport, throwing of items from moving vehicles."
   },
   {
-    name: "Umar Salihu",
-    img: "https://source.unsplash.com/random/56x56",
-    status: "Resolved",
-    time: "12:25pm",
-    title: "Roro Bins/Container Not Covered",
-    shortDesc:
-      "Waste bin container not covered thereby exposing waste causing...",
+    tag: "Roro Bins/Container not covered",
+    shortDesc: "waste bin container not covered thereby exposing waste causing air pollution...",
+    longDesc: "waste bin container not covered thereby exposing waste causing air pollution (toxic materials) in the environment."
   },
   {
-    name: "Umar Salihu",
-    img: "https://source.unsplash.com/random/56x56",
-    status: "Pending",
-    time: "12:25pm",
-    title: "Illegal Hawking of Waste Residue",
-    shortDesc:
-      "Waste residue sold by the road side like metals, aluminum, plastics...",
+    tag: "Illegal hawking of waste residue",
+    shortDesc: "waste residue sold by the road side like metals, aluminum, plastics and other waste residue.",
+    longDesc: "waste residue sold by the road side like metals, aluminum, plastics and other waste residue."
   },
   {
-    name: "Umar Salihu",
-    img: "https://source.unsplash.com/random/56x56",
-    status: "In Progress",
-    time: "12:25pm",
-    title: "Drainage Waste Unattended to",
-    shortDesc: "Heap of drainage waste on culvert without proper disposal...",
+    tag: "Drainage Waste unattended to",
+    shortDesc: "Heap of drainage waste on culvert without proper disposal.",
+    longDesc: "Heap of drainage waste on culvert without proper disposal."
   },
   {
-    name: "Umar Salihu",
-    img: "https://source.unsplash.com/random/56x56",
-    status: "Pending",
-    time: "12:25pm",
-    title: "Indiscriminate Dumping of Waste",
-    shortDesc:
-      "Unlawful disposal of waste in undesignated spaces such as open...",
+    tag: "Wrong Placement of Roro Bins",
+    shortDesc: "Keeping of Roro bins in unauthorized locations or...",
+    longDesc: "Keeping of Roro bins in unauthorized locations or moving them from proscribed point to another."
   },
   {
-    name: "Umar Salihu",
-    img: "https://source.unsplash.com/random/56x56",
-    status: "Resolved",
-    time: "12:25pm",
-    title: "Wrong Placement of Roro Bins",
-    shortDesc:
-      "Keeping of Roro bins in unauthorized locations or moving them from...",
+    tag: "Burning of waste in unauthorized locations",
+    shortDesc: "Involves burning of refuse or any material in unauthorized locations...",
+    longDesc: "Involves burning of refuse or any material in unauthorized locations like road sides, drainages, open/vacant land, and public spaces."
+  },
+])
+console.log(description.value);
+const getShortText = (tag) => {
+  const finalVal = description.value.find((report) => {
+    return tag.toUpperCase() == report.tag.toUpperCase()
+  })
+  if (finalVal) {
+    return finalVal.shortDesc
+  } else {
+    return "There is presently no description for this"
+  }
+}
+const getLongText = (tag) => {
+  const finalVal = description.value.find((report) => {
+    return tag.toUpperCase() == report.tag.toUpperCase()
+  })
+  if (finalVal) {
+    return finalVal.longDesc
+  } else {
+    return "There is presently no description for this"
+  }
+}
+const formatTime = (time) => {
+  const dateTime = new Date(time)
+  let hours = dateTime.getHours();
+  var ampm = "AM";
+  if( hours > 12 ) {
+    hours -= 12;
+    ampm = "PM";
+  }
+  if (hours == 12) {
+    ampm = "PM";
+  }
+  let minutes = dateTime.getMinutes();
+  if (minutes < 10) {
+    minutes = "0" + minutes;
+  }
+  return `${hours} ${minutes} ${ampm}`;
+
+}
+const statuses = ref([
+  {
+    name: "Pending",
+    id: "pending",
   },
   {
-    name: "Umar Salihu",
-    img: "https://source.unsplash.com/random/56x56",
-    status: "Pending",
-    time: "12:25pm",
-    title: "Burning of Waste in Unauthorized Locations",
-    shortDesc:
-      "Involves burning of refuse or any material in unauthorized locations...",
+    name: "In Progress",
+    id: "progress",
   },
   {
-    name: "Umar Salihu",
-    img: "https://source.unsplash.com/random/56x56",
-    status: "In Progress",
-    time: "12:25pm",
-    title: "Indiscriminate Dumping of Waste",
-    shortDesc:
-      "Unlawful disposal of waste in undesignated spaces such as open...",
-  },
+    name: "Resolved",
+    id: "resolved"
+  }
 ]);
+
 const displayData = ref({});
 const selectedIndex = ref(null);
 const checkStatus = (status) => {
-  if (status === "Pending") {
+  if (status === "pending") {
     return "status__pending";
-  } else if (status === "In Progress") {
+  } else if (status === "progress") {
     return "status__progress";
   } else {
     return "status__resolved";
@@ -179,9 +212,9 @@ const showFiltered = (status) => {
               v-for="(status, index) in statuses"
               :key="index"
               class="cursor-pointer status border-b py-4 text-primary bg-white flex justify-start pl-4 items-center text-left w-36 leading-none text-base font-medium"
-              @click="showFiltered(status)"
+              @click="showFiltered(status.name)"
             >
-              {{ status }}
+              {{ status.name }}
             </p>
           </div>
         </div>
@@ -195,13 +228,14 @@ const showFiltered = (status) => {
           class="report-card bg-white flex items-start rounded-2xl p-6 mb-4 cursor-pointer"
         >
           <div class="pfp w-14 h-14 rounded-full">
-            <img class="w-full rounded-full" :src="report.img" alt="" />
+            <img class="w-full rounded-full" src="https://source.unsplash.com/random/56x56" alt="" />
           </div>
           <div class="flex flex-col ml-6 w-5/6">
             <div class="flex items-center mb-3">
-              <p class="font-medium text-black flex-grow text-left text-sm">
-                {{ report.name }}
+              <p v-if="report.user" class="font-medium text-black flex-grow text-left text-sm">
+                {{ report.user.name }}
               </p>
+              <p v-else class="text-white flex-grow">.</p>
               <p
                 class="status status__pending flex items-center justify-center text-xs text-white px-2"
                 :class="checkStatus(report.status)"
@@ -211,10 +245,10 @@ const showFiltered = (status) => {
               <p class="time text-sm ml-10 text-grey-3">{{ report.time }}</p>
             </div>
             <h2 class="text-yellow-1 font-medium mb-4 text-left text-lg">
-              {{ report.title }}
+              {{ report.tag }}
             </h2>
             <p class="text-sm text-left text-grey-3">
-              {{ report.shortDesc }}
+              {{ getShortText(report.tag) }}
             </p>
           </div>
         </div>
@@ -225,8 +259,8 @@ const showFiltered = (status) => {
     <template v-if="Object.keys(displayData).length">
       <div class="py-16 px-8 d-flex flex-col items-start w-full text-left">
         <div class="flex justify-between text-sm items-center text-grey-3 mb-8">
-          <p class="">Feb 08</p>
-          <p class="">{{ displayData.time }}</p>
+          <p class="">{{ new Date(displayData.createdAt).toLocaleDateString('en-us', {month:"short", day:"numeric"})  }}</p>
+          <p class="">{{ formatTime(displayData.createdAt) }}</p>
         </div>
         <div class="flex items-center mb-3">
           <div class="pfp w-8 h-8 rounded-full">
@@ -236,11 +270,11 @@ const showFiltered = (status) => {
             {{ displayData.name }}
           </p>
         </div>
-        <h4 class="mt-1 text-yellow-1 font-medium">{{ displayData.title }}</h4>
+        <h4 class="mt-1 text-yellow-1 font-medium">{{ displayData.tag }}</h4>
         <p class="mt-8 text-primary text-opacity-40 text-xs">Location</p>
-        <p class="mt-2 text-sm font-medium">No. 4 Ahmadu Bello Way</p>
+        <p class="mt-2 text-sm font-medium">{{ displayData.location }}</p>
         <p class="mt-4 text-primary text-opacity-40 text-xs">Nearest Landmark</p>
-        <p class="mt-2 text-sm font-medium">Makarfi Plaza</p>
+        <p class="mt-2 text-sm font-medium">{{ displayData.landmark }}</p>
         <p class="mt-4 text-primary text-opacity-40 text-xs">Resolution Status</p>
         <p
           class="mt-2 status text-white flex justify-center items-center px-3 max-w-max leading-none text-sm font-medium"
@@ -249,7 +283,7 @@ const showFiltered = (status) => {
           {{ displayData.status }}
         </p>
         <p class="mt-4 text-primary text-opacity-40 text-xs">Report Description</p>
-        <p class="mt-2 text-base font-medium">Unlawful disposal of waste in undesignated spaces such as open or vacant land, sources of water, and other areas.</p>
+        <p class="mt-2 text-base font-medium">{{ getLongText(displayData.tag) }}</p>
         <button
           class="border cursor-pointer rounded-lg h-14 w-full flex items-center justify-center text-base font-medium mt-12"
           :class="btnClicked ? 'bg-primary text-white' : 'border-yellow-1 text-yellow-1'"
@@ -267,10 +301,10 @@ const showFiltered = (status) => {
             v-for="(status, index) in statuses"
             :key="index"
             class="mt-2 cursor-pointer status text-white flex justify-center items-center px-3 max-w-max leading-none text-sm font-medium"
-            :class="checkStatus(status)"
-            @click="filterBody[selectedIndex].status = status"
+            :class="checkStatus(status.id)"
+            @click="updateStatus(status.id)"
           >
-            {{ status }}
+            {{ status.name }}
           </p>
         </div>
       </div>

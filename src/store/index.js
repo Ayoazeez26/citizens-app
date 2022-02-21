@@ -1,8 +1,8 @@
 import { createStore } from "vuex";
+import report from "./report";
 
-export default createStore({
-  state: {},
-  mutations: {},
-  actions: {},
-  modules: {},
+export const store = createStore({
+  modules: {
+    report,
+  },
 });

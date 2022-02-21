@@ -11,10 +11,19 @@ import reporticon from "../assets/dashicons/record.svg";
 // import settingsicon from "../assets/dashicons/settings.svg";
 import logouticon from "../assets/dashicons/logout.svg";
 const showDialog = ref(false);
+import { useRouter } from "vue-router";
+
+const router = useRouter();
 
 const toggleDialog = () => {
   showDialog.value = !showDialog.value;
 };
+
+const handleLogout = () => {
+  localStorage.removeItem("auth-token");
+
+  router.push({ name: "Login" });
+}
 </script>
 <template>
   <div class="min-w-screen min-h-screen flex">
@@ -24,7 +33,7 @@ const toggleDialog = () => {
           to="/"
           class="item flex items-center space-x-2 px-4 cursor-pointer py-3"
         >
-          <svg-icon :data="dashicon" :fill="none" />
+          <svg-icon :data="dashicon" />
           <p class="item__text text-white">Dashboard</p>
         </router-link>
         <router-link
@@ -121,12 +130,12 @@ const toggleDialog = () => {
           >
             CANCEL
           </button>
-          <router-link
-            to="/auth/login"
+          <div
+            @click="handleLogout"
             class="logout-btn text-primary text-opacity-40 text-sm font-semibold"
           >
             I WANT TO LOGOUT
-          </router-link>
+          </div>
         </div>
       </div>
     </div>

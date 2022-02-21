@@ -11,20 +11,24 @@ export default {
 <script setup>
 import EyeOutlineIcon from "vue-material-design-icons/EyeOutline.vue";
 import EyeOffOutlineIcon from "vue-material-design-icons/EyeOffOutline.vue";
+import { login } from "@/services/AuthService";
 import { ref, computed } from "vue";
 import { useRouter } from "vue-router";
 
 const router = useRouter();
 
-const adminId = ref("");
-const password = ref("");
+const loginData = ref({
+  email: "",
+  password: "",
+});
+
 const rememberAdmin = ref(true);
 const togglePasswordVisibility = (e) => {
   isPasswordVisible.value = !isPasswordVisible.value;
 };
 const isPasswordVisible = ref(false);
 const containsItem = computed(() => {
-  if (adminId.value.length > 0 && password.value.length > 0) {
+  if (loginData.value.email.length > 0 && loginData.value.password.length > 0) {
     return false;
   } else {
     return true;
@@ -32,6 +36,21 @@ const containsItem = computed(() => {
 });
 const handleLogin = () => {
   console.log("User is logged in");
+  const data = {
+    email: loginData.value.email,
+    password: loginData.value.password,
+  };
+
+  login(data)
+    .then((res) => {
+      console.log(res);
+      const data = res.data;
+      localStorage.setItem("auth-token", JSON.stringify(data.token));
+      router.push("/");
+    })
+    .catch((err) => {
+      console.log(err);
+    });
 };
 </script>
 
@@ -53,7 +72,7 @@ const handleLogin = () => {
           >
           <input
             id="userEmail"
-            v-model="adminId"
+            v-model="loginData.email"
             class="email p-3 border mt-2 focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary w-full"
             type="email"
             name="username"
@@ -68,7 +87,7 @@ const handleLogin = () => {
           >
           <input
             id="userPassword"
-            v-model="password"
+            v-model="loginData.password"
             class="email p-3 border mt-2 focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary w-full"
             :type="isPasswordVisible ? 'text' : 'password'"
             name="username"
@@ -116,7 +135,6 @@ const handleLogin = () => {
           type="submit"
           :disabled="containsItem"
           class="w-full py-4 bg-primary text-white font-medium rounded-lg disabled:bg-opacity-60"
-          @click="router.push('/')"
         >
           Login
         </button>

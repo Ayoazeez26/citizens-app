@@ -4,6 +4,11 @@ export default {};
 </script>
 <script setup>
 import { ref } from "vue";
+import { getAllReports } from "@/services/ReportService";
+// import { useStore } from "vuex";
+
+// const store = useStore();
+
 const shadowButtons = ref([
   {
     name: "Pending",
@@ -24,6 +29,38 @@ const shadowButtons = ref([
     to: "/reports#resolved",
   },
 ]);
+const resultLength = ref(0);
+const reportData = ref([]);
+const pendingData = ref([]);
+const progressData = ref([]);
+const resolvedData = ref([]);
+const getReports = () => {
+  getAllReports().then((res) => {
+    const data = res.data;
+    console.log(data);
+    resultLength.value = data.results;
+    reportData.value = data.data.singleReport;
+    filterData();
+    // store.dispatch("report/setReports", data.data.singleReport);
+  });
+};
+getReports();
+
+const filterData = () => {
+  pendingData.value = reportData.value.filter(
+    (report) => report.status === "pending",
+  );
+  progressData.value = reportData.value.filter(
+    (report) => report.status === "in progress",
+  );
+  resolvedData.value = reportData.value.filter(
+    (report) => report.status === "resolved",
+  );
+  console.log(pendingData.value);
+  shadowButtons.value[0].amount = pendingData.value.length;
+  shadowButtons.value[1].amount = progressData.value.length;
+  shadowButtons.value[2].amount = resolvedData.value.length;
+};
 </script>
 <template lang="">
   <div class="home-section">
@@ -38,7 +75,7 @@ const shadowButtons = ref([
           >
             <img src="../../assets/images/mic.png" alt="mic" />
             <div class="line h-full w-px bg-grey-2 mx-12"></div>
-            <span class="text-primary text-5xl"> 658 </span>
+            <span class="text-primary text-5xl"> {{ resultLength }} </span>
             <span
               class="text-xs text-primary text-opacity-40 self-start mt-5 ml-2"
               >Reported</span
