@@ -932,6 +932,11 @@
     "@babel/helper-validator-identifier" "^7.16.7"
     to-fast-properties "^2.0.0"
 
+"@grafikri/vue-middleware@^1.0.0":
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/@grafikri/vue-middleware/-/vue-middleware-1.0.0.tgz#85bb41357922e3f89b3bd08008f7f3e7acaa2c69"
+  integrity sha512-9rMmZAZoHdScZTSU0Oa/hkEa2fMrVCR3V2bv6SXT0JFVUrd4EURu0aiLySuL/rF51CnB1tqxYW9+tAhc7UTfeg==
+
 "@hapi/address@2.x.x":
   version "2.1.4"
   resolved "https://registry.yarnpkg.com/@hapi/address/-/address-2.1.4.tgz#5d67ed43f3fd41a69d4b9ff7b56e7c0d1d0a81e5"

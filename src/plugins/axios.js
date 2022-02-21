@@ -23,7 +23,7 @@ axiosClient.interceptors.response.use(
   (error) => {
     const status = error.response?.status;
     if (status === 401 || status === 403) {
-      router.push({ name: "Login" });
+      router.to("/login");
     }
     return Promise.reject(error);
   },

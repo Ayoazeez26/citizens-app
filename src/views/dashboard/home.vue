@@ -51,7 +51,7 @@ const filterData = () => {
     (report) => report.status === "pending",
   );
   progressData.value = reportData.value.filter(
-    (report) => report.status === "in progress",
+    (report) => report.status === "progress",
   );
   resolvedData.value = reportData.value.filter(
     (report) => report.status === "resolved",
