@@ -104,7 +104,9 @@ const description = ref([
 console.log(description.value);
 const getShortText = (tag) => {
   const finalVal = description.value.find((report) => {
-    return tag.toUpperCase() == report.tag.toUpperCase()
+    if (tag) {
+      return tag.toUpperCase() == report.tag.toUpperCase();
+    }
   })
   if (finalVal) {
     return finalVal.shortDesc
