@@ -1,10 +1,6 @@
 <script>
 export default {
   name: "Home",
-  // component: {
-  //   EyeOutlineIcon,
-  //   EyeOffOutlineIcon,
-  // },
 };
 </script>
 
@@ -13,6 +9,10 @@ import EyeOutlineIcon from "vue-material-design-icons/EyeOutline.vue";
 import EyeOffOutlineIcon from "vue-material-design-icons/EyeOffOutline.vue";
 import { login } from "@/services/AuthService";
 import { ref, computed } from "vue";
+import { useLoading } from "vue3-loading-overlay";
+import { errorToast, successToast } from "@/plugins/notify";
+import { getErrorMessage } from '@/utils/get-error-message';
+import "vue3-loading-overlay/dist/vue3-loading-overlay.css";
 import { useRouter } from "vue-router";
 
 const router = useRouter();
@@ -22,6 +22,9 @@ const loginData = ref({
   password: "",
 });
 
+// const isLoading = ref(true);
+// const fullPage = ref(true);
+// const loader = ref("spinner");
 const rememberAdmin = ref(true);
 const togglePasswordVisibility = (e) => {
   isPasswordVisible.value = !isPasswordVisible.value;
@@ -35,7 +38,15 @@ const containsItem = computed(() => {
   }
 });
 const handleLogin = () => {
-  console.log("User is logged in");
+  let loader = useLoading();
+  loader.show({
+    color: "#2F3F4C",
+    backgroundColor: "#ffffff",
+    opacity: 0.5,
+    zIndex: 999,
+    width: 64,
+    height: 64,
+  });
   const data = {
     email: loginData.value.email,
     password: loginData.value.password,
@@ -44,20 +55,31 @@ const handleLogin = () => {
   login(data)
     .then((res) => {
       console.log(res);
+      successToast("Login Successful");
+      loader.hide();
       const data = res.data;
       localStorage.setItem("auth-token", JSON.stringify(data.token));
       router.push("/");
     })
     .catch((err) => {
       console.log(err);
+      const errorMessage = getErrorMessage(err);
+      errorToast(errorMessage);
+      loader.hide();
     });
 };
 </script>
 
 <template>
   <div
+    ref="home"
     class="home w-screen h-screen bg-yellow-2 flex flex-col items-center justify-center relative"
   >
+    <!-- <loading-overlay
+      :active="isLoading"
+      :is-full-page="fullPage"
+      :loader="loader"
+    /> -->
     <div class="home-card p-10 rounded-lg">
       <div class="home-card__title flex justify-between items-end">
         <p class="text-3xl text-primary raleway font-semibold">Log In</p>

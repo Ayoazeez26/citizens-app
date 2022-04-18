@@ -14,6 +14,7 @@ const showDialog = ref(false);
 import { useRouter } from "vue-router";
 
 const router = useRouter();
+const showProfile = ref(false);
 
 const toggleDialog = () => {
   showDialog.value = !showDialog.value;
@@ -23,7 +24,7 @@ const handleLogout = () => {
   localStorage.removeItem("auth-token");
 
   router.push({ name: "Login" });
-}
+};
 </script>
 <template>
   <div class="min-w-screen min-h-screen flex">
@@ -91,19 +92,54 @@ const handleLogout = () => {
           alt="logo"
         />
 
-        <div class="flex items-center mr-16">
+        <div class="relative flex items-center mr-16">
           <img
             class="mr-6"
             src="../assets/icons/notifications.svg"
             alt="notification"
           />
-          <div class="top-nav__desc flex items-center pl-6">
+          <div
+            @click="showProfile = !showProfile"
+            class="top-nav__desc cursor-pointer flex items-center pl-6"
+          >
             <img src="../assets/icons/pfp.svg" alt="profile picture" />
             <div class="flex flex-col pl-4">
               <span class="text-sm">Aaron John</span>
               <span class="green font-medium text-left text-green-1"
                 >Super Admin</span
               >
+            </div>
+          </div>
+        </div>
+        <div
+          v-if="showProfile"
+          class="profile-info absolute top-20 right-0 w-80 h-32 bg-white"
+        >
+          <div
+            class="bg-yellow-2 w-full h-12 flex items-center font-semibold pl-4 text-xs justify-start"
+          >
+            <h6 class="text-primary">USER PROFILE</h6>
+          </div>
+          <div class="flex mt-4">
+            <img
+              class="w-12 mx-4"
+              src="../assets/icons/pfp.svg"
+              alt="profile picture"
+            />
+            <div class="desc flex flex-col justify-start text-left">
+              <p class="text-xs leading-none font-medium">Super Admin</p>
+              <p class="text-sm mt-1 leading-none font-semibold">Aaron John</p>
+              <div class="flex items-center mt-1">
+                <img
+                  class=""
+                  src="../assets/icons/work.svg"
+                  alt="profile picture"
+                />
+                <span class="font-semibold small-text ml-2"
+                  ><span class="title font-medium">Job Role:</span> PA to the Administrator
+                  KCTA</span
+                >
+              </div>
             </div>
           </div>
         </div>
@@ -132,7 +168,7 @@ const handleLogout = () => {
           </button>
           <div
             @click="handleLogout"
-            class="logout-btn text-primary text-opacity-40 text-sm font-semibold"
+            class="logout-btn text-primary text-opacity-40 text-sm font-semibold cursor-pointer"
           >
             I WANT TO LOGOUT
           </div>
@@ -239,6 +275,16 @@ const handleLogout = () => {
         margin-left: 57px;
       }
     }
+  }
+}
+.profile-info {
+  box-shadow: 0px 2px 16px rgba(0, 0, 0, 0.1);
+}
+.small-text {
+  font-size: 10px;
+  color: #838383;
+  .title {
+    color: #bcbcc4;
   }
 }
 </style>

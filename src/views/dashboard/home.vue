@@ -5,6 +5,8 @@ export default {};
 <script setup>
 import { ref } from "vue";
 import { getAllReports } from "@/services/ReportService";
+import { useLoading } from "vue3-loading-overlay";
+import "vue3-loading-overlay/dist/vue3-loading-overlay.css";
 // import { useStore } from "vuex";
 
 // const store = useStore();
@@ -13,19 +15,19 @@ const shadowButtons = ref([
   {
     name: "Pending",
     class: "red",
-    amount: "164",
+    amount: "0",
     to: "/reports#pending",
   },
   {
     name: "In progress",
-    amount: "329",
+    amount: "0",
     class: "yellow",
     to: "/reports#progress",
   },
   {
     name: "Resolved",
     class: "green",
-    amount: "165",
+    amount: "0",
     to: "/reports#resolved",
   },
 ]);
@@ -35,14 +37,30 @@ const pendingData = ref([]);
 const progressData = ref([]);
 const resolvedData = ref([]);
 const getReports = () => {
-  getAllReports().then((res) => {
-    const data = res.data;
-    console.log(data);
-    resultLength.value = data.results;
-    reportData.value = data.data.singleReport;
-    filterData();
-    // store.dispatch("report/setReports", data.data.singleReport);
+  let loader = useLoading();
+  loader.show({
+    color: "#2F3F4C",
+    backgroundColor: "#ffffff",
+    opacity: 0.5,
+    zIndex: 999,
+    width: 64,
+    height: 64,
   });
+  getAllReports()
+    .then((res) => {
+      const data = res.data;
+      console.log(data);
+      loader.hide();
+      resultLength.value = data.results;
+      reportData.value = data.data.singleReport;
+      filterData();
+      // store.dispatch("report/setReports", data.data.singleReport);
+    })
+    .catch((err) => {
+      console.log(err);
+      loader.hide();
+      // isLoading.value = false;
+    });
 };
 getReports();
 
@@ -119,7 +137,7 @@ const filterData = () => {
   box-shadow: 0px 2px 16px rgba(0, 0, 0, 0.1);
 }
 .status-card {
-  width: 328px;
+  width: 250px;
   height: 80px;
   background-color: white;
   box-shadow: 0px 2px 16px rgba(0, 0, 0, 0.1);
